@@ -7,16 +7,23 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // Show the form for adding a product
-    public function create()
+    // Show all products
+    public function index()
     {
-        return view('addproducts');
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
-    // Store the product details in the database
-    public function store(Request $request)
+    // Show the form for editing a specific product
+    public function edit($id)
     {
-        // Validate the form input
+        $product = Product::findOrFail($id);
+        return view('products.edit', compact('product'));
+    }
+
+    // Update the specified product in the database
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -24,10 +31,19 @@ class ProductController extends Controller
             'quantity' => 'required|integer',
         ]);
 
-        // Use only the allowed fields for mass assignment
-        Product::create($request->only(['name', 'description', 'price', 'quantity']));
+        $product = Product::findOrFail($id);
+        $product->update($request->all());
 
-        // Redirect back to the home page with a success message
-        return redirect('/home')->with('success', 'Product added successfully.');
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
+    }
+
+    // Delete a product
+    public function destroy($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
 }
+
