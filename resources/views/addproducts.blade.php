@@ -35,6 +35,15 @@
             <label for="quantity">Quantity:</label>
             <input type="number" class="form-control" id="quantity" name="quantity" required>
         </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control" id="category" name="category_id">
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary">Add Product</button>
     </form>
 @stop

@@ -20,6 +20,7 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Quantity</th>
+                <th>Category</th> <!-- Added Category column -->
                 <th>Actions</th>
             </tr>
         </thead>
@@ -30,6 +31,7 @@
                 <td>{{ $product->description }}</td>
                 <td>{{ $product->price }}</td>
                 <td>{{ $product->quantity }}</td>
+                <td>{{ $product->category->name ?? 'No Category' }}</td> <!-- Display Category -->
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning">Edit</a>
 
